@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+
 import '../utils/app_colors.dart';
-import '../utils/app_text_styles.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -28,7 +28,9 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isSecondary ? Colors.transparent : const Color(0xFF0052FF),
+          backgroundColor: isSecondary
+              ? Colors.transparent
+              : const Color(0xFF0052FF),
           foregroundColor: isSecondary ? const Color(0xFF0052FF) : Colors.white,
           elevation: isSecondary ? 0 : 2,
           side: isSecondary ? const BorderSide(color: Color(0xFF0052FF)) : null,

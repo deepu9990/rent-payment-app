@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+
 import '../utils/app_colors.dart';
-import '../utils/app_text_styles.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
@@ -89,7 +89,10 @@ class CustomTextField extends StatelessWidget {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: AppColors.primaryBlue, width: 2),
+                  borderSide: const BorderSide(
+                    color: AppColors.primaryBlue,
+                    width: 2,
+                  ),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -97,9 +100,15 @@ class CustomTextField extends StatelessWidget {
                 ),
                 focusedErrorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: AppColors.errorColor, width: 2),
+                  borderSide: const BorderSide(
+                    color: AppColors.errorColor,
+                    width: 2,
+                  ),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 18,
+                ),
                 floatingLabelBehavior: FloatingLabelBehavior.auto,
                 errorStyle: const TextStyle(
                   fontFamily: 'Helvetica Neue',
@@ -111,9 +120,12 @@ class CustomTextField extends StatelessWidget {
             if (isRequired)
               Positioned(
                 right: 32,
-                top: 18,
+                top: 16,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                    vertical: 2,
+                  ),
                   child: const Text(
                     '(Required)',
                     style: TextStyle(
@@ -125,7 +137,6 @@ class CustomTextField extends StatelessWidget {
                   ),
                 ),
               ),
-              
           ],
         ),
       ],

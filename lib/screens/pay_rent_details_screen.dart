@@ -28,7 +28,6 @@ class _PayRentDetailsScreenState extends State<PayRentDetailsScreen> {
 
     final userAccount = _dataService.getUserAccount();
     final landlordInfo = _dataService.getLandlordInfo();
-    final rentData = _dataService.getRentPaymentData();
 
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
@@ -127,153 +126,160 @@ class _PayRentDetailsScreenState extends State<PayRentDetailsScreen> {
               ),
           ],
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Ejari upload is optional. Users must ensure legal compliance.',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.textSecondary,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Ejari upload is optional. Users must ensure legal compliance.',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 32),
+                const SizedBox(height: 32),
 
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundColor,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: AppColors.borderColor),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Address Summary',
-                      style: AppTextStyles.caption.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(rentData!.address, style: AppTextStyles.body),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Rent Amount: ${_dataService.formattedRentAmount}',
-                      style: AppTextStyles.caption.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.primaryBlue,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: AppColors.cardBackground,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withAlpha(13),
-                      blurRadius: 10,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Landlord Name', style: AppTextStyles.caption),
-                        GestureDetector(
-                          onTap: _editDetails,
-                          child: const Icon(
-                            Icons.edit,
-                            size: 16,
-                            color: AppColors.textSecondary,
-                          ),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppColors.backgroundColor,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppColors.borderColor),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Address Summary',
+                        style: AppTextStyles.caption.copyWith(
+                          fontWeight: FontWeight.w600,
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      landlordInfo?.name.isNotEmpty == true
-                          ? landlordInfo!.name
-                          : 'Mr. Giuseppe Marrafa',
-                      style: AppTextStyles.body.copyWith(
-                        fontWeight: FontWeight.w600,
                       ),
-                    ),
-                    const SizedBox(height: 20),
-
-                    Text('IBAN', style: AppTextStyles.caption),
-                    const SizedBox(height: 8),
-                    Text(
-                      landlordInfo?.iban.isNotEmpty == true
-                          ? landlordInfo!.iban
-                          : '558468908-99-67579',
-                      style: AppTextStyles.body.copyWith(
-                        fontWeight: FontWeight.w600,
+                      const SizedBox(height: 8),
+                      Text(rentData!.address, style: AppTextStyles.body),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Rent Amount: ${_dataService.formattedRentAmount}',
+                        style: AppTextStyles.caption.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primaryBlue,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-
-                    Text('Bank Name', style: AppTextStyles.caption),
-                    const SizedBox(height: 8),
-                    Text(
-                      landlordInfo?.bankName.isNotEmpty == true
-                          ? landlordInfo!.bankName
-                          : 'Default Bank',
-                      style: AppTextStyles.body.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.primaryBlue,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-
-                    Text('Email', style: AppTextStyles.caption),
-                    const SizedBox(height: 8),
-                    Text(
-                      landlordInfo?.email.isNotEmpty == true
-                          ? landlordInfo!.email
-                          : 'lowercase@gmail.com',
-                      style: AppTextStyles.body.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-
-                    Text('Phone', style: AppTextStyles.caption),
-                    const SizedBox(height: 8),
-                    Text(
-                      landlordInfo?.phone.isNotEmpty == true
-                          ? landlordInfo!.phone
-                          : '+971-566662969',
-                      style: AppTextStyles.body.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 40),
+                const SizedBox(height: 24),
 
-              Center(
-                child: CustomButton(
-                  text: 'Continue',
-                  onPressed: _proceedToPayment,
-                  isLoading: _isLoading,
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: AppColors.cardBackground,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withAlpha(13),
+                        blurRadius: 10,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Landlord Name', style: AppTextStyles.caption),
+                          GestureDetector(
+                            onTap: _editDetails,
+                            child: const Icon(
+                              Icons.edit,
+                              size: 16,
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        landlordInfo?.name.isNotEmpty == true
+                            ? landlordInfo!.name
+                            : 'Mr. Giuseppe Marrafa',
+                        style: AppTextStyles.body.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      Text('IBAN', style: AppTextStyles.caption),
+                      const SizedBox(height: 8),
+                      Text(
+                        landlordInfo?.iban.isNotEmpty == true
+                            ? landlordInfo!.iban
+                            : '558468908-99-67579',
+                        style: AppTextStyles.body.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      Text('Bank Name', style: AppTextStyles.caption),
+                      const SizedBox(height: 8),
+                      Text(
+                        landlordInfo?.bankName.isNotEmpty == true
+                            ? landlordInfo!.bankName
+                            : 'Default Bank',
+                        style: AppTextStyles.body.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primaryBlue,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      Text('Email', style: AppTextStyles.caption),
+                      const SizedBox(height: 8),
+                      Text(
+                        landlordInfo?.email.isNotEmpty == true
+                            ? landlordInfo!.email
+                            : 'No email provided',
+                        style: AppTextStyles.body.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: landlordInfo?.email.isNotEmpty == true
+                              ? AppColors.textPrimary
+                              : AppColors.textSecondary,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      Text('Phone', style: AppTextStyles.caption),
+                      const SizedBox(height: 8),
+                      Text(
+                        landlordInfo?.phone.isNotEmpty == true
+                            ? landlordInfo!.phone
+                            : '+971-566662969',
+                        style: AppTextStyles.body.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 40),
+
+                Center(
+                  child: CustomButton(
+                    text: 'Continue',
+                    onPressed: _proceedToPayment,
+                    isLoading: _isLoading,
+                  ),
+                ),
+                const SizedBox(height: 20), // Add extra bottom padding
+              ],
+            ),
           ),
         ),
       ),

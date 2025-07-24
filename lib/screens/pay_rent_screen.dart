@@ -57,6 +57,22 @@ class _PayRentScreenState extends State<PayRentScreen> {
     return null;
   }
 
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Email is required';
+    }
+
+    RegExp emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
+
+    if (!emailRegex.hasMatch(value.trim())) {
+      return 'Please enter a valid email address';
+    }
+
+    return null;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -120,98 +136,106 @@ class _PayRentScreenState extends State<PayRentScreen> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: const CustomAppBar(title: 'Pay Your Rent'),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Ejari upload is optional. Users must ensure legal compliance.',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.textSecondary,
+      body: SafeArea(
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Ejari upload is optional. Users must ensure legal compliance.',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 32),
+                const SizedBox(height: 32),
 
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundColor,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: AppColors.borderColor),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Address Summary',
-                      style: AppTextStyles.caption.copyWith(
-                        fontWeight: FontWeight.w600,
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppColors.backgroundColor,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppColors.borderColor),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Address Summary',
+                        style: AppTextStyles.caption.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      '3208, 32, Sulafa tower, Dubai Marina, Dubai, UAE',
-                      style: AppTextStyles.body,
-                    ),
-                  ],
+                      const SizedBox(height: 8),
+                      Text(
+                        '3208, 32, Sulafa tower, Dubai Marina, Dubai, UAE',
+                        style: AppTextStyles.body,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
+                const SizedBox(height: 24),
 
-              CustomTextField(
-                label: 'Landlord\'s Name',
-                controller: _landlordNameController,
-              ),
-              const SizedBox(height: 16),
+                CustomTextField(
+                  label: 'Landlord\'s Name',
+                  controller: _landlordNameController,
+                ),
+                const SizedBox(height: 16),
 
-              CustomTextField(
-                label: 'Landlord\'s IBAN',
-                controller: _landlordIbanController,
-                isRequired: true,
-                keyboardType: TextInputType.text,
-                validator: _validateIban,
-              ),
-              const SizedBox(height: 16),
+                CustomTextField(
+                  label: 'Landlord\'s IBAN',
+                  controller: _landlordIbanController,
+                  isRequired: true,
+                  keyboardType: TextInputType.text,
+                  validator: _validateIban,
+                ),
+                const SizedBox(height: 16),
 
-              CustomTextField(
-                label: 'Bank Name',
-                isRequired: true,
-                controller: _bankNameController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Bank name is required';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
+                CustomTextField(
+                  label: 'Bank Name',
+                  isRequired: true,
+                  controller: _bankNameController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bank name is required';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
 
-              CustomTextField(
-                label: 'Landlord\'s Email',
-                controller: _landlordEmailController,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              const SizedBox(height: 16),
+                CustomTextField(
+                  label: 'Landlord\'s Email',
+                  controller: _landlordEmailController,
+                  keyboardType: TextInputType.emailAddress,
+                  isRequired: true,
+                  validator: _validateEmail,
+                ),
+                const SizedBox(height: 16),
 
-              CustomTextField(
-                label: 'Landlord\'s Phone',
-                controller: _landlordPhoneController,
-                keyboardType: TextInputType.phone,
-                isRequired: true,
-                validator: _validateDubaiMobile,
-              ),
-              const SizedBox(height: 40),
+                CustomTextField(
+                  label: 'Landlord\'s Phone',
+                  controller: _landlordPhoneController,
+                  keyboardType: TextInputType.phone,
+                  isRequired: true,
+                  validator: _validateDubaiMobile,
+                ),
+                const SizedBox(height: 40),
 
-              CustomButton(
-                text: 'Done',
-                onPressed: _proceedToDetails,
-                isLoading: _isLoading,
-              ),
-            ],
+                Center(
+                  child: CustomButton(
+                    text: 'Done',
+                    onPressed: _proceedToDetails,
+                    isLoading: _isLoading,
+                  ),
+                ),
+                const SizedBox(height: 20), // Add extra bottom padding
+              ],
+            ),
           ),
         ),
       ),

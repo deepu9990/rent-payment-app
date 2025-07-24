@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../utils/app_colors.dart';
-import '../utils/app_text_styles.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -23,16 +22,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.cardBackground,
       elevation: 0,
       automaticallyImplyLeading: false,
-      toolbarHeight: 120, // Increased height to accommodate separate lines
+      toolbarHeight: 140, // Increased height to prevent overflow
       flexibleSpace: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 12),
-
-              if (showBackButton)
+              if (showBackButton) ...[
                 GestureDetector(
                   onTap:
                       onBackPressed ??
@@ -50,21 +48,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                 ),
-              const SizedBox(height: 16),
+                const SizedBox(height: 8),
+              ] else
+                const SizedBox(height: 16),
 
-              Container(
-                width: 219,
-                height: 38,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    fontFamily: 'Parabolica',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 32,
-                    height: 38 / 32, // line-height equivalent
-                    color: Color(0xFF202020),
+              Flexible(
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontFamily: 'Parabolica',
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 32,
+                      height: 1.2, // Adjusted line height
+                      color: Color(0xFF202020),
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),
@@ -88,5 +90,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(120 + 1); // Updated for new height
+  Size get preferredSize => const Size.fromHeight(140 + 1); // Updated for new height
 }
