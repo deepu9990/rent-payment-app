@@ -1,0 +1,14 @@
+
+
+
+
+
+
+
+PRODUCT_NAME = rent_payment_app
+
+
+PRODUCT_BUNDLE_IDENTIFIER = com.example.rentpayment.rentPaymentApp
+
+
+PRODUCT_COPYRIGHT = Copyright © 2025 com.example.rentpayment. All rights reserved.
